@@ -1,0 +1,13 @@
+{
+  "tailwindCSS.experimental.configFile": "packages/ui/src/styles/globals.css",
+  "chat.mcp.serverSampling": {
+    "supacalculator/.vscode/mcp.json: supabase": {
+      "allowedModels": [
+        "openrouter/deepseek/deepseek-chat-v3.1:free",
+        "openrouter/nvidia/nemotron-nano-9b-v2:free",
+        "openrouter/qwen/qwen3-coder:free",
+        "openrouter/x-ai/grok-4-fast:free"
+      ]
+    }
+  }
+}
