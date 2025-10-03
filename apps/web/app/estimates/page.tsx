@@ -257,10 +257,12 @@ function EstimatesClientContent() {
   }
 
   const calculatePlanetScaleCost = (data: any) => {
-    const { monthlyActiveRows } = data
-    let cost = 29 // Scaler base
-    const extraRows = Math.max(0, monthlyActiveRows - 5000000) * 0.0001
-    cost += extraRows
+    const { readsPerMonth, writesPerMonth } = data
+    let cost = 29 // Scaler base ($29/month for 10B reads, 5B writes, 100GB storage)
+    // Approximate overage for exceeding limits (actual is tier upgrade, but for calculator)
+    const overReads = Math.max(0, readsPerMonth - 10000000000) / 1000000 * 0.0001
+    const overWrites = Math.max(0, writesPerMonth - 5000000000) / 1000000 * 0.0001
+    cost += overReads + overWrites
     return Math.round(cost * 100) / 100
   }
 
@@ -344,7 +346,7 @@ function EstimatesClientContent() {
     const operationsCost = (messagesPerMonth / 1000000) * 4
     const connectionCost = concurrentConnections * 0.002 // Approx per concurrent/month
     return Math.round((operationsCost + connectionCost) * 100) / 100
-  }
+  } 
 
   // Render: Loading if auth or query loading
   if (useAuth().loading || estimatesLoading) {
@@ -803,10 +805,12 @@ const calculateNeonCost = (data: any) => {
 }
 
 const calculatePlanetScaleCost = (data: any) => {
-  const { monthlyActiveRows } = data
-  let cost = 29 // Scaler base
-  const extraRows = Math.max(0, monthlyActiveRows - 5000000) * 0.0001
-  cost += extraRows
+  const { readsPerMonth, writesPerMonth } = data
+  let cost = 29 // Scaler base ($29/month for 10B reads, 5B writes, 100GB storage)
+  // Approximate overage for exceeding limits (actual is tier upgrade, but for calculator)
+  const overReads = Math.max(0, readsPerMonth - 10000000000) / 1000000 * 0.0001
+  const overWrites = Math.max(0, writesPerMonth - 5000000000) / 1000000 * 0.0001
+  cost += overReads + overWrites
   return Math.round(cost * 100) / 100
 }
 
